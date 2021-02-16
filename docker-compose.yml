@@ -1,0 +1,18 @@
+version: '2'
+services:
+  sns:
+    image: s12v/sns
+    ports:
+      - "9911:9911"
+    volumes:
+        - ./src/main/resources/sns/db.json:/tmp/db.json
+    environment:
+      - DB_PATH=/tmp/db.json
+    depends_on:
+      - sqs
+  sqs:
+    image: s12v/elasticmq
+    ports:
+      - "9324:9324"
+    volumes:
+      - ./src/main/resources/sqs/elasticmq.conf:/etc/elasticmq/elasticmq.conf
